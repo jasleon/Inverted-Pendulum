@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Eigen/Dense"
+#include "InvertedPendulum.h"
  
 using Eigen::MatrixXd;
  
@@ -11,4 +12,6 @@ int main()
   m(0,1) = -1;
   m(1,1) = m(1,0) + m(0,1);
   std::cout << m << std::endl;
+
+  std::cout << sum(1.0, 2.0) << std::endl;
 }
