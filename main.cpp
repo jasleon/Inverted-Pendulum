@@ -1,6 +1,6 @@
 #include <iostream>
 #include "Eigen/Dense"
-#include "InvertedPendulum.h"
+#include "inverted_pendulum.h"
  
 using Eigen::MatrixXd;
  
