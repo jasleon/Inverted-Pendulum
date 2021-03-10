@@ -1,6 +1,10 @@
 #include "inverted_pendulum.h"
 
-double sum(const double &x, const double &y)
-{
-    return x + y;
+#include "Eigen/Dense"
+
+InvertedPendulum::InvertedPendulum() {
+  x_ = Eigen::VectorXd(4);
+  x_ << 0, 0, 0, 0;
 }
+
+Eigen::VectorXd InvertedPendulum::getState() const { return x_; }
