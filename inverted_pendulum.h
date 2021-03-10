@@ -16,10 +16,12 @@ class InvertedPendulum {
   const double J_t_;    // total inertia
   
   Eigen::VectorXd x_;
+  Eigen::VectorXd x_dot_;
 
  public:
   InvertedPendulum();
   Eigen::VectorXd getState() const;
+  void update();
 };
 
 #endif  // INVERTED_PENDULUM_H_
