@@ -17,11 +17,12 @@ class InvertedPendulum {
   
   Eigen::VectorXd x_;
   Eigen::VectorXd x_dot_;
+  double previous_time_;
 
  public:
   InvertedPendulum();
+  void update(double timestamp, double u);
   Eigen::VectorXd getState() const;
-  void update(double u = 0);
 };
 
 #endif  // INVERTED_PENDULUM_H_
