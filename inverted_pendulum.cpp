@@ -19,7 +19,7 @@ InvertedPendulum::InvertedPendulum()
   x_dot_ << 0, 0, 0, 0;
 }
 
-void InvertedPendulum::update(double time, double u) {
+void InvertedPendulum::Update(double time, double u) {
   // Recover state parameters
   double x     = x_(0); // position of the base
   double theta = x_(1); // angle of the pendulum
@@ -49,4 +49,4 @@ void InvertedPendulum::update(double time, double u) {
   x_ += x_dot_ * dt;
 }
 
-Eigen::VectorXd InvertedPendulum::getState() const { return x_; }
+Eigen::VectorXd InvertedPendulum::GetState() const { return x_; }
