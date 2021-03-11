@@ -21,6 +21,7 @@ class InvertedPendulum {
 
  public:
   InvertedPendulum();
+  InvertedPendulum(Eigen::VectorXd x_0);
   void Update(double time, double u);
   Eigen::VectorXd GetState() const;
 };

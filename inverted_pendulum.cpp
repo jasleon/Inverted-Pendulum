@@ -19,6 +19,22 @@ InvertedPendulum::InvertedPendulum()
   x_dot_ << 0, 0, 0, 0;
 }
 
+InvertedPendulum::InvertedPendulum(Eigen::VectorXd x_0)
+    : M_(1.0),
+      m_(1.0),
+      J_(1.0),
+      l_(1.0),
+      c_(1.0),
+      gamma_(1.0),
+      g_(9.81),
+      M_t_(2.0),
+      J_t_(2.0),
+      x_(x_0),
+      x_dot_(Eigen::VectorXd(4)),
+      previous_time_(0.0) {
+  x_dot_ << 0, 0, 0, 0;
+}
+
 void InvertedPendulum::Update(double time, double u) {
   // Recover state parameters
   double x     = x_(0); // position of the base
