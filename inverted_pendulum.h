@@ -20,8 +20,10 @@ class InvertedPendulum {
   double previous_time_;
 
  public:
-  InvertedPendulum();
+  InvertedPendulum(double M, double m, double J, double l, double c,
+                   double gamma, Eigen::VectorXd x_0);
   InvertedPendulum(Eigen::VectorXd x_0);
+  InvertedPendulum();
   void Update(double time, double u);
   Eigen::VectorXd GetState() const;
 };
