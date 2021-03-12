@@ -28,7 +28,17 @@ class InvertedPendulum {
    * Constructor with default parameters and default initial conditions
    */
   InvertedPendulum();
+
+  /**
+   * Updates the state by using the inverted pendulum equations
+   * @param time Current simulation time
+   * @param u Force applied to the base of the system
+   */
   void Update(double time, double u);
+
+  /**
+   * Returns the value of the state vector
+   */
   Eigen::VectorXd GetState() const;
 
  private:
