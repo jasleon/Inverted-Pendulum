@@ -10,5 +10,5 @@ add_library(model src/inverted_pendulum.cpp)
 add_executable(app src/main.cpp)
 target_link_libraries(app model)
 
-add_executable(test tests/main.cpp)
+add_executable(test tests/main.cpp tests/inverted_pendulum_test.cpp)
 target_link_libraries(test model ${GTEST_LIBRARIES} pthread)
