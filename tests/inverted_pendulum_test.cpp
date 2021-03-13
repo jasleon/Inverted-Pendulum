@@ -1,4 +1,4 @@
-#include "../src/inverted_pendulum.h"
+#include "inverted_pendulum.h"
 
 #include <gtest/gtest.h>
 
