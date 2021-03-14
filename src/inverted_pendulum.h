@@ -41,7 +41,6 @@ class InvertedPendulum {
    */
   Eigen::VectorXd GetState() const;
 
- private:
   const double M_;      // mass of the base
   const double m_;      // mass of the pendulum
   const double J_;      // moment of inertia of the pendulum
@@ -52,6 +51,7 @@ class InvertedPendulum {
   const double M_t_;    // total mass
   const double J_t_;    // total inertia
 
+ private:
   Eigen::VectorXd x_;      // state vector
   Eigen::VectorXd x_dot_;  // state vector derivative
   double previous_time_;
