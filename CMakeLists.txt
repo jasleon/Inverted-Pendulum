@@ -1,5 +1,6 @@
 cmake_minimum_required (VERSION 3.5)
 project(inverted_pendulum)
+add_definitions(-std=c++17)
 
 find_package(GTest REQUIRED)
 
