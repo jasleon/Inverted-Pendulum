@@ -12,17 +12,24 @@ if __name__ == "__main__":
     ax.grid()
 
     x = np.arange(-2, 2, 0.01)
-    mass, = ax.plot([],[],linestyle='None',marker='s',\
+    theta = 0.25 * np.pi
+    phi = 0.5 * np.pi
+    mass1, = ax.plot([],[],linestyle='None',marker='s',\
                  markersize=40,markeredgecolor='k',\
+                 color='orange',markeredgewidth=2)
+    mass2, = ax.plot([],[],linestyle='None',marker='o',\
+                 markersize=20,markeredgecolor='k',\
                  color='orange',markeredgewidth=2)
     
     def init():
-        mass.set_data([], [])
-        return mass,
+        mass1.set_data([], [])
+        mass2.set_data([], [])
+        return mass1, mass2,
     
     def animate(i):
-        mass.set_data([x[i]], [0])
-        return mass,
+        mass1.set_data([x[i]], [0])
+        mass2.set_data([x[i] + 0.5 * np.cos(theta + phi)], [0.5 * np.sin(theta + phi)])
+        return mass1, mass2,
     
     ani = animation.FuncAnimation(fig, animate, x.size, interval=10, repeat=False, blit=True)
     
