@@ -3,6 +3,18 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 
+def generate_mass1():
+    x = np.arange(-2, 2, 0.01)
+    y = np.zeros_like(x)
+    return x, y
+
+def generate_mass2(x_mass1, y_mass1):
+    theta = 0.25 * np.pi
+    phi = 0.5 * np.pi
+    x = x_mass1 + 0.5 * np.cos(theta + phi)
+    y = y_mass1 + 0.5 * np.sin(theta + phi)
+    return x, y
+
 if __name__ == "__main__":
     for i, arg in enumerate(sys.argv):
         print('argv[{}]: {}'.format(i, arg))
@@ -11,9 +23,9 @@ if __name__ == "__main__":
     ax.set_aspect('equal')
     ax.grid()
 
-    x = np.arange(-2, 2, 0.01)
-    theta = 0.25 * np.pi
-    phi = 0.5 * np.pi
+    m1_x, m1_y = generate_mass1()
+    m2_x, m2_y = generate_mass2(m1_x, m1_y)
+    
     mass1, = ax.plot([],[],linestyle='None',marker='s',\
                  markersize=40,markeredgecolor='k',\
                  color='orange',markeredgewidth=2)
@@ -27,10 +39,10 @@ if __name__ == "__main__":
         return mass1, mass2,
     
     def animate(i):
-        mass1.set_data([x[i]], [0])
-        mass2.set_data([x[i] + 0.5 * np.cos(theta + phi)], [0.5 * np.sin(theta + phi)])
+        mass1.set_data([m1_x[i]], [m1_y[i]])
+        mass2.set_data([m2_x[i]], [m2_y[i]])
         return mass1, mass2,
     
-    ani = animation.FuncAnimation(fig, animate, x.size, interval=10, repeat=False, blit=True)
+    ani = animation.FuncAnimation(fig, animate, m1_x.size, interval=10, repeat=False, blit=True)
     
     plt.show()
