@@ -2,10 +2,12 @@ import sys
 import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.animation as animation
+import csv
 
 def generate_data():
     # Create base coordinates
-    base_x = np.arange(-2., 2., 0.01)
+    step = 0.01
+    base_x = np.arange(-2., 2., step)
     base_y = np.zeros_like(base_x)
 
     # Create pendulum's angle from the equilibrium position
@@ -24,16 +26,45 @@ def generate_data():
     data[:, 2] = pendulum_x
     data[:, 3] = pendulum_y
 
-    return data
+    return step, data
+
+def load_samples(filename):
+    samples = []
+    with open(filename) as csvfile:
+        reader = csv.reader(csvfile)
+        next(reader)
+        for line in reader:
+            samples.append(line)
+    
+    m = len(samples)
+    data = np.zeros((m, 4))
+    for i, line in enumerate(samples):
+        time = float(line[0])
+        base_x = float(line[1])
+        base_y = 0.0
+        theta = float(line[2])
+        phi = np.pi / 2
+        rod_length = 1.0
+        pendulum_x = base_x + rod_length * np.cos(theta + phi)
+        pendulum_y = base_y + rod_length * np.sin(theta + phi)
+        data[i, :] = np.array([base_x, base_y, pendulum_x, pendulum_y])
+    step = float(samples[1][0])
+    return step, data
 
 if __name__ == "__main__":
     for i, arg in enumerate(sys.argv):
         print('argv[{}]: {}'.format(i, arg))
     
-    sim = generate_data()
+    argc = len(sys.argv)
+    if argc < 2:
+        step, sim = generate_data()
+    else:
+        filename = sys.argv[1]
+        step, sim = load_samples(filename)
     
+    delay = int(1000 * step)
     fig = plt.figure(figsize=(5, 4))
-    ax = fig.add_subplot(111, autoscale_on=False, xlim=(-2, 2), ylim=(-1, 1))
+    ax = fig.add_subplot(111, autoscale_on=False, xlim=(-2, 2), ylim=(-2, 2))
     ax.set_aspect('equal')
     ax.grid()
 
@@ -67,6 +98,6 @@ if __name__ == "__main__":
         
         return base, pendulum, rod
     
-    ani = animation.FuncAnimation(fig, animate, sim.shape[0], interval=10, repeat=True, blit=True)
+    ani = animation.FuncAnimation(fig, animate, sim.shape[0], interval=delay, repeat=True, blit=True)
     
     plt.show()
