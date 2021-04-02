@@ -3,6 +3,7 @@
 
 #include "Eigen/Dense"
 #include "inverted_pendulum.h"
+#include "tools.h"
 
 int main() {
   // Set initial conditions
@@ -15,7 +16,8 @@ int main() {
   // Define simulation time
   sciplot::Vec time = sciplot::linspace(0.0, 20.0, 1000);
 
-  // Save the state of the model
+  // Store data from the simulation
+  std::vector<std::vector<double>> data;
   std::vector<double> theta;
 
   // Simulate model
@@ -24,6 +26,7 @@ int main() {
 
     Eigen::VectorXd x = model.GetState();
     theta.push_back(x(1));
+    data.push_back({t, x(0), x(1)});
   }
 
   // Create Plot object
@@ -37,4 +40,7 @@ int main() {
 
   // Show the plot in a pop-up window
   plot.show();
+
+  // Export data to file
+  Export("data.csv", {"time", "position", "angle"}, data);
 }
