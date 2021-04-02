@@ -4,7 +4,7 @@
 #include <string>
 #include <vector>
 
-void Save(std::string filename, const std::vector<double> &time,
-          std::vector<double> &position, const std::vector<double> &angle);
+void Export(std::string filename, std::vector<std::string> columns,
+            std::vector<std::vector<double>> &data);
 
 #endif  // TOOLS_H_
