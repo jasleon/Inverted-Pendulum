@@ -9,6 +9,8 @@ int main() {
   base.setPosition(320.0F, 240.0F);
   base.setFillColor(sf::Color::Green);
 
+  sf::Clock clock;
+
   while (window.isOpen()) {
     sf::Event event;
     while (window.pollEvent(event)) {
@@ -18,6 +20,8 @@ int main() {
           break;
       }
     }
+    sf::Time elapsed = clock.getElapsedTime();
+    std::cout << elapsed.asSeconds() << '\n';
     window.clear();
     window.draw(base);
     window.display();
