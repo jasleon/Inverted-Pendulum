@@ -14,4 +14,4 @@ target_link_libraries(test source ${GTEST_LIBRARIES} pthread)
 
 find_package(SFML COMPONENTS graphics window system REQUIRED)
 add_executable(SFMLTest viz/main.cpp)
-target_link_libraries(SFMLTest sfml-graphics sfml-window sfml-system)
+target_link_libraries(SFMLTest source sfml-graphics sfml-window sfml-system)
