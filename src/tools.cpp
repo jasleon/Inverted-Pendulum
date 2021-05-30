@@ -1,6 +1,7 @@
 #include "tools.h"
 
 #include <fstream>
+#include <cmath>
 
 void Export(std::string filename, std::vector<std::string> columns,
             std::vector<std::vector<double>>& data) {
@@ -21,3 +22,7 @@ void Export(std::string filename, std::vector<std::string> columns,
     }
   }
 }
+
+double to_radians(double degrees) { return (degrees * (M_PI / 180.0F)); }
+
+double to_degrees(double radians) { return (radians * (180.0F / M_PI)); }
