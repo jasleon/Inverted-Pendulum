@@ -15,13 +15,15 @@ int main() {
   x_0 << p_0, to_radians(theta_0), 0, 0;
 
   // Create a model with default parameters
-  InvertedPendulum model(x_0);
+  InvertedPendulum *ptr = new InvertedPendulum(x_0);
   
   // Create the cart of the inverted pendulum
   sf::RectangleShape base(sf::Vector2f(100.0F, 100.0F));
   base.setOrigin(50.0F, 50.0F);
   base.setPosition(320.0F, 240.0F);
   base.setFillColor(sf::Color::Blue);
+  base.setOutlineColor(sf::Color::Black);
+  base.setOutlineThickness(2.5);
 
   // Create the pole of the inverted pendulum
   sf::RectangleShape pole(sf::Vector2f(20.0F, 200.0F));
@@ -29,6 +31,8 @@ int main() {
   pole.setPosition(320.0F, 240.0F);
   pole.setRotation(-theta_0);
   pole.setFillColor(sf::Color::Green);
+  pole.setOutlineColor(sf::Color::Black);
+  pole.setOutlineThickness(2.5);
 
   // Create a clock to run the simulation
   sf::Clock clock;
@@ -45,9 +49,18 @@ int main() {
     
     // Update the simulation
     sf::Time elapsed = clock.getElapsedTime();
-    std::cout << elapsed.asSeconds() << '\n';
-    model.Update(elapsed.asSeconds(), 0);
-    Eigen::VectorXd x = model.GetState();
+    const float time = elapsed.asSeconds();
+    std::cout << time << '\n';
+    if(time < 15) {
+      ptr->Update(time, 0);
+    }
+    else {
+      delete ptr;
+      ptr = new InvertedPendulum(x_0);
+      clock.restart();
+    }
+    
+    Eigen::VectorXd x = ptr->GetState();
     
     // Update SFML drawings
     base.setPosition(320.0F + 100 * x(0), 240.0F);
