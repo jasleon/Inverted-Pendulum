@@ -49,8 +49,8 @@ int main() {
   pole.setOrigin(10.0F, 200.0F);
   pole.setPosition(320.0F, 240.0F);
   pole.setRotation(-theta_0);
-  const sf::Color Brown = sf::Color(0xCC, 0x99, 0x66);
-  pole.setFillColor(Brown);
+  const sf::Color brown = sf::Color(0xCC, 0x99, 0x66);
+  pole.setFillColor(brown);
 
   // Create a clock to run the simulation
   sf::Clock clock;
