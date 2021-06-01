@@ -18,12 +18,10 @@ int main() {
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
   
   // Create the cart of the inverted pendulum
-  sf::RectangleShape base(sf::Vector2f(100.0F, 100.0F));
-  base.setOrigin(50.0F, 50.0F);
-  base.setPosition(320.0F, 240.0F);
-  base.setFillColor(sf::Color::Blue);
-  base.setOutlineColor(sf::Color::Black);
-  base.setOutlineThickness(2.5);
+  sf::RectangleShape cart(sf::Vector2f(100.0F, 100.0F));
+  cart.setOrigin(50.0F, 50.0F);
+  cart.setPosition(320.0F, 240.0F);
+  cart.setFillColor(sf::Color::Black);
 
   // Create the pole of the inverted pendulum
   sf::RectangleShape pole(sf::Vector2f(20.0F, 200.0F));
@@ -31,8 +29,6 @@ int main() {
   pole.setPosition(320.0F, 240.0F);
   pole.setRotation(-theta_0);
   pole.setFillColor(sf::Color::Green);
-  pole.setOutlineColor(sf::Color::Black);
-  pole.setOutlineThickness(2.5);
 
   // Create a clock to run the simulation
   sf::Clock clock;
@@ -63,12 +59,12 @@ int main() {
     Eigen::VectorXd x = ptr->GetState();
     
     // Update SFML drawings
-    base.setPosition(320.0F + 100 * x(0), 240.0F);
+    cart.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setRotation(to_degrees(-x(1)));
     
     window.clear(sf::Color::White);
-    window.draw(base);
+    window.draw(cart);
     window.draw(pole);
     window.display();
   }
