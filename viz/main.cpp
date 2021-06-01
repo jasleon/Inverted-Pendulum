@@ -17,11 +17,26 @@ int main() {
   // Create a model with default parameters
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
 
+  // Load font
+  sf::Font font;
+  if (!font.loadFromFile("Roboto-Regular.ttf")) {
+    std::cout << "Failed to load font!\n";
+  }
+
+  // Create text to display simulation time
+  sf::Text text;
+  text.setFont(font);
+  text.setCharacterSize(24);
+  const sf::Color grey = sf::Color(0x7E, 0x7E, 0x7E);
+  text.setFillColor(grey);
+  text.setPosition(480.0F, 360.0F);
+
   // Create a track for the cart
   sf::RectangleShape track(sf::Vector2f(640.0F, 2.0F));
   track.setOrigin(320.0F, 1.0F);
   track.setPosition(320.0F, 240.0F);
-  track.setFillColor(sf::Color::Black);
+  const sf::Color light_grey = sf::Color(0xAA, 0xAA, 0xAA);
+  track.setFillColor(light_grey);
 
   // Create the cart of the inverted pendulum
   sf::RectangleShape cart(sf::Vector2f(100.0F, 100.0F));
@@ -53,7 +68,8 @@ int main() {
     // Update the simulation
     sf::Time elapsed = clock.getElapsedTime();
     const float time = elapsed.asSeconds();
-    std::cout << time << '\n';
+    const std::string msg = std::to_string(time);
+    text.setString("Time " + msg.substr(0, msg.find('.') + 2));
     if (time < 15) {
       ptr->Update(time, 0);
     } else {
@@ -73,6 +89,7 @@ int main() {
     window.draw(track);
     window.draw(cart);
     window.draw(pole);
+    window.draw(text);
     window.display();
   }
   return 0;
