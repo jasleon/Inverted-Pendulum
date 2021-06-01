@@ -16,7 +16,13 @@ int main() {
 
   // Create a model with default parameters
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
-  
+
+  // Create a track for the cart
+  sf::RectangleShape track(sf::Vector2f(640.0F, 2.0F));
+  track.setOrigin(320.0F, 1.0F);
+  track.setPosition(320.0F, 240.0F);
+  track.setFillColor(sf::Color::Black);
+
   // Create the cart of the inverted pendulum
   sf::RectangleShape cart(sf::Vector2f(100.0F, 100.0F));
   cart.setOrigin(50.0F, 50.0F);
@@ -43,28 +49,28 @@ int main() {
           break;
       }
     }
-    
+
     // Update the simulation
     sf::Time elapsed = clock.getElapsedTime();
     const float time = elapsed.asSeconds();
     std::cout << time << '\n';
-    if(time < 15) {
+    if (time < 15) {
       ptr->Update(time, 0);
-    }
-    else {
+    } else {
       delete ptr;
       ptr = new InvertedPendulum(x_0);
       clock.restart();
     }
-    
+
     Eigen::VectorXd x = ptr->GetState();
-    
+
     // Update SFML drawings
     cart.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setRotation(to_degrees(-x(1)));
-    
+
     window.clear(sf::Color::White);
+    window.draw(track);
     window.draw(cart);
     window.draw(pole);
     window.display();
