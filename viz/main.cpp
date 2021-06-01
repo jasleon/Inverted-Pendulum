@@ -16,23 +16,41 @@ int main() {
 
   // Create a model with default parameters
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
-  
+
+  // Load font
+  sf::Font font;
+  if (!font.loadFromFile("Roboto-Regular.ttf")) {
+    std::cout << "Failed to load font!\n";
+  }
+
+  // Create text to display simulation time
+  sf::Text text;
+  text.setFont(font);
+  text.setCharacterSize(24);
+  const sf::Color grey = sf::Color(0x7E, 0x7E, 0x7E);
+  text.setFillColor(grey);
+  text.setPosition(480.0F, 360.0F);
+
+  // Create a track for the cart
+  sf::RectangleShape track(sf::Vector2f(640.0F, 2.0F));
+  track.setOrigin(320.0F, 1.0F);
+  track.setPosition(320.0F, 240.0F);
+  const sf::Color light_grey = sf::Color(0xAA, 0xAA, 0xAA);
+  track.setFillColor(light_grey);
+
   // Create the cart of the inverted pendulum
-  sf::RectangleShape base(sf::Vector2f(100.0F, 100.0F));
-  base.setOrigin(50.0F, 50.0F);
-  base.setPosition(320.0F, 240.0F);
-  base.setFillColor(sf::Color::Blue);
-  base.setOutlineColor(sf::Color::Black);
-  base.setOutlineThickness(2.5);
+  sf::RectangleShape cart(sf::Vector2f(100.0F, 100.0F));
+  cart.setOrigin(50.0F, 50.0F);
+  cart.setPosition(320.0F, 240.0F);
+  cart.setFillColor(sf::Color::Black);
 
   // Create the pole of the inverted pendulum
   sf::RectangleShape pole(sf::Vector2f(20.0F, 200.0F));
   pole.setOrigin(10.0F, 200.0F);
   pole.setPosition(320.0F, 240.0F);
   pole.setRotation(-theta_0);
-  pole.setFillColor(sf::Color::Green);
-  pole.setOutlineColor(sf::Color::Black);
-  pole.setOutlineThickness(2.5);
+  const sf::Color brown = sf::Color(0xCC, 0x99, 0x66);
+  pole.setFillColor(brown);
 
   // Create a clock to run the simulation
   sf::Clock clock;
@@ -46,30 +64,32 @@ int main() {
           break;
       }
     }
-    
+
     // Update the simulation
     sf::Time elapsed = clock.getElapsedTime();
     const float time = elapsed.asSeconds();
-    std::cout << time << '\n';
-    if(time < 15) {
+    const std::string msg = std::to_string(time);
+    text.setString("Time " + msg.substr(0, msg.find('.') + 2));
+    if (time < 15) {
       ptr->Update(time, 0);
-    }
-    else {
+    } else {
       delete ptr;
       ptr = new InvertedPendulum(x_0);
       clock.restart();
     }
-    
+
     Eigen::VectorXd x = ptr->GetState();
-    
+
     // Update SFML drawings
-    base.setPosition(320.0F + 100 * x(0), 240.0F);
+    cart.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setPosition(320.0F + 100 * x(0), 240.0F);
     pole.setRotation(to_degrees(-x(1)));
-    
+
     window.clear(sf::Color::White);
-    window.draw(base);
+    window.draw(track);
+    window.draw(cart);
     window.draw(pole);
+    window.draw(text);
     window.display();
   }
   return 0;

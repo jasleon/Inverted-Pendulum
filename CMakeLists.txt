@@ -6,6 +6,9 @@ find_package(GTest REQUIRED)
 
 add_subdirectory(src)
 
+# Additional resources like images and fonts
+configure_file(res/Roboto-Regular.ttf Roboto-Regular.ttf COPYONLY)
+
 add_executable(app src/main.cpp)
 target_link_libraries(app source)
 
