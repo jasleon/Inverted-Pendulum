@@ -23,7 +23,7 @@ class PID {
    * Update the PID error variables given cross track error.
    * @param cte The current cross track error
    */
-  void UpdateError(double cte);
+  void UpdateError(double time, double cte);
 
   /**
    * Calculate the total PID error.
@@ -32,6 +32,8 @@ class PID {
   double TotalError();
 
  private:
+  double previous_time;
+
   /**
    * PID Errors
    */
@@ -41,7 +43,7 @@ class PID {
 
   /**
    * PID Coefficients
-   */ 
+   */
   double Kp;
   double Ki;
   double Kd;

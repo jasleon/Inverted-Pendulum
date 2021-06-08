@@ -21,15 +21,17 @@ void PID::Init(double Kp_, double Ki_, double Kd_) {
   d_error = 0;
 }
 
-void PID::UpdateError(double cte) {
+void PID::UpdateError(double time, double cte) {
   /**
    * Update PID errors based on cte.
    */
+  double dt = time - previous_time;
+  previous_time = time;
   double prev_cte = p_error;
 
   p_error = cte;
-  i_error = i_error + cte;
-  d_error = cte - prev_cte;
+  i_error = dt * i_error + cte;
+  d_error = (cte - prev_cte) / dt;
 }
 
 double PID::TotalError() {
