@@ -4,18 +4,26 @@
 #include "Eigen/Dense"
 #include "inverted_pendulum.h"
 #include "tools.h"
+#include "pid.h"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(640, 480), "Inverted Pendulum");
 
   // Set initial conditions
   const double p_0 = 0;
-  const double theta_0 = -30;
+  const double theta_0 = -5;
   Eigen::VectorXd x_0(4);
   x_0 << p_0, to_radians(theta_0), 0, 0;
 
+  // Set PID constants
+  const double kp = 100.0F;
+  const double ki = 50.0F;
+  const double kd = 10.0F;
+
   // Create a model with default parameters
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
+  PID *c_ptr = new PID();
+  c_ptr->Init(kp, ki, kd);
 
   // Load font
   sf::Font font;
@@ -71,10 +79,17 @@ int main() {
     const std::string msg = std::to_string(time);
     text.setString("Time " + msg.substr(0, msg.find('.') + 2));
     if (time < 15) {
-      ptr->Update(time, 0);
+      double angle = ptr->GetState()(1);
+      double error = 0.0F - angle;
+      std::cout << "angle: " << angle << std::endl;
+      c_ptr->UpdateError(time, error);
+      ptr->Update(time, c_ptr->TotalError());
     } else {
       delete ptr;
+      delete c_ptr;
       ptr = new InvertedPendulum(x_0);
+      PID *c_ptr = new PID();
+      c_ptr->Init(kp, ki, kd);
       clock.restart();
     }
 
