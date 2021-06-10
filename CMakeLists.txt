@@ -10,13 +10,22 @@ add_definitions(-std=c++17)
 add_subdirectory(src)
 
 # Add executable to plot states
-add_executable(plot src/main.cpp)
-target_link_libraries(plot source)
+find_package(sciplot)
+if(sciplot_FOUND)
+  add_executable(plot src/main.cpp)
+  target_link_libraries(plot sciplot::sciplot source)
+else()
+  message("sciplot need to be installed to generate the plot executable")
+endif()
 
 # Add executable to run unit tests
-find_package(GTest REQUIRED)
-add_executable(test tests/main.cpp tests/inverted_pendulum_test.cpp)
-target_link_libraries(test source ${GTEST_LIBRARIES} pthread)
+find_package(GTest)
+if(GTest_FOUND)
+  add_executable(test tests/main.cpp tests/inverted_pendulum_test.cpp)
+  target_link_libraries(test source ${GTEST_LIBRARIES} pthread)
+else()
+  message("gloogletest need to be installed to generate the test executable")
+endif()
 
 # Additional resources like images and fonts
 configure_file(res/Roboto-Regular.ttf Roboto-Regular.ttf COPYONLY)
