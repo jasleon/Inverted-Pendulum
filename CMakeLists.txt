@@ -10,8 +10,8 @@ add_definitions(-std=c++17)
 add_subdirectory(src)
 
 # Add executable to plot states
-add_executable(app src/main.cpp)
-target_link_libraries(app source)
+add_executable(plot src/main.cpp)
+target_link_libraries(plot source)
 
 # Add executable to run unit tests
 find_package(GTest REQUIRED)
