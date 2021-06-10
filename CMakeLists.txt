@@ -1,20 +1,27 @@
 cmake_minimum_required (VERSION 3.5)
+
+# Set project name
 project(inverted_pendulum)
+
+# Required to plot states
 add_definitions(-std=c++17)
 
-find_package(GTest REQUIRED)
-
+# Add library
 add_subdirectory(src)
+
+# Add executable to plot states
+add_executable(plot src/main.cpp)
+target_link_libraries(plot source)
+
+# Add executable to run unit tests
+find_package(GTest REQUIRED)
+add_executable(test tests/main.cpp tests/inverted_pendulum_test.cpp)
+target_link_libraries(test source ${GTEST_LIBRARIES} pthread)
 
 # Additional resources like images and fonts
 configure_file(res/Roboto-Regular.ttf Roboto-Regular.ttf COPYONLY)
 
-add_executable(app src/main.cpp)
-target_link_libraries(app source)
-
-add_executable(test tests/main.cpp tests/inverted_pendulum_test.cpp)
-target_link_libraries(test source ${GTEST_LIBRARIES} pthread)
-
+# Add executable to open game environment
 find_package(SFML COMPONENTS graphics window system REQUIRED)
-add_executable(SFMLTest viz/main.cpp)
-target_link_libraries(SFMLTest source sfml-graphics sfml-window sfml-system)
+add_executable(game game/main.cpp)
+target_link_libraries(game source sfml-graphics sfml-window sfml-system)
