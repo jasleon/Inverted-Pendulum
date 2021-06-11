@@ -7,11 +7,11 @@ A simple simulator to test control algorithms in C++
   <img src="img/carpole-free.gif" width=50% height=50%/>
 </p>
 <p align="center">
-    Inverted pendulum with non-zero initial conditions
+    Inverted pendulum in open-loop
 </p>
 
 ## Notes
-This simulator is being developed on Ubuntu using the Windows Subsystem for Linux (WSL).
+This simulator is being developed on Ubuntu using the Windows Subsystem for Linux (WSL)
 
 ## Dependencies
 - cmake
@@ -33,7 +33,7 @@ This simulator is being developed on Ubuntu using the Windows Subsystem for Linu
 
 ## References
 ### Projects
-- [CartPole-v1 from OpenAI](https://gym.openai.com/envs/CartPole-v1/)
+- [CartPole-v1](https://gym.openai.com/envs/CartPole-v1/)
 ### Tutorials
 - [Install WSL on Windows 10](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
 - [Install SFML in Linux](https://www.sfml-dev.org/tutorials/2.5/start-linux.php)
