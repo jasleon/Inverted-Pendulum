@@ -3,6 +3,13 @@
 
 This project simulates an inverted pendulum in C++
 
+<p align="center">
+  <img src="img/carpole-free.gif" width=50% height=50%/>
+</p>
+<p align="center">
+    Inverted pendulum with non-zero initial conditions
+</p>
+
 ## Dependencies
 - cmake
 - make
