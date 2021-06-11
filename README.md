@@ -25,16 +25,19 @@ This simulator is being developed on Ubuntu using the Windows Subsystem for Linu
 1. Clone this repo.
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
-4. Run it: `./game`
+4. Run it: `./cartpole`
 
 ## Guidelines
 - [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html)
 - [Udacity Git Commit Message Style Guide](http://udacity.github.io/git-styleguide/)
 
 ## References
+### Projects
+- [CartPole-v1 from OpenAI](https://gym.openai.com/envs/CartPole-v1/)
 ### Tutorials
 - [Install WSL on Windows 10](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
 - [Install SFML in Linux](https://www.sfml-dev.org/tutorials/2.5/start-linux.php)
 - [Install sciplot](https://sciplot.github.io/installation/)
+- [Build googletest](https://github.com/google/googletest/blob/master/googletest/README.md)
 ### Books
 - Åström, K. J., & Murray, R. M. (2021). *Feedback systems: An introduction for scientists and engineers* (2nd ed.). Princeton University Press. ([online](https://fbswiki.org/wiki/index.php/Feedback_Systems:_An_Introduction_for_Scientists_and_Engineers))

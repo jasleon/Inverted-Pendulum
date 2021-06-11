@@ -32,5 +32,5 @@ configure_file(res/Roboto-Regular.ttf Roboto-Regular.ttf COPYONLY)
 
 # Add executable to open game environment
 find_package(SFML COMPONENTS graphics window system REQUIRED)
-add_executable(game game/main.cpp)
-target_link_libraries(game source sfml-graphics sfml-window sfml-system)
+add_executable(cartpole game/main.cpp)
+target_link_libraries(cartpole source sfml-graphics sfml-window sfml-system)
