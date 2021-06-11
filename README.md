@@ -1,16 +1,40 @@
 # Inverted Pendulum
+![GitHub last commit](https://img.shields.io/github/last-commit/jasleon/Inverted-Pendulum)
 
-This project simulates an inverted pendulum in C++
-
-## Visualizer
-
-This project contains a simple visualizer written in Python. The visualizer reads the simulation data from a CSV file. 
-
-Here's an example of the output:
+A simple simulator to test control algorithms in C++
 
 <p align="center">
-<img src="img/example.gif"/>
+  <img src="img/carpole-free.gif" width=50% height=50%/>
+</p>
+<p align="center">
+    Inverted pendulum with non-zero initial conditions
 </p>
 
+## Notes
+This simulator is being developed on Ubuntu using the Windows Subsystem for Linux (WSL).
 
+## Dependencies
+- cmake
+- make
+- gcc/g++
+- [sfml](https://www.sfml-dev.org/)
+- [googletest](https://github.com/google/googletest) (optional)
+- [sciplot](https://github.com/sciplot/sciplot) (optional)
 
+## Build Instructions
+1. Clone this repo.
+2. Make a build directory: `mkdir build && cd build`
+3. Compile: `cmake .. && make`
+4. Run it: `./game`
+
+## Guidelines
+- [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html)
+- [Udacity Git Commit Message Style Guide](http://udacity.github.io/git-styleguide/)
+
+## References
+### Tutorials
+- [Install WSL on Windows 10](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
+- [Install SFML in Linux](https://www.sfml-dev.org/tutorials/2.5/start-linux.php)
+- [Install sciplot](https://sciplot.github.io/installation/)
+### Books
+- Åström, K. J., & Murray, R. M. (2021). *Feedback systems: An introduction for scientists and engineers* (2nd ed.). Princeton University Press. ([online](https://fbswiki.org/wiki/index.php/Feedback_Systems:_An_Introduction_for_Scientists_and_Engineers))
