@@ -1,7 +1,7 @@
 # Inverted Pendulum
 ![GitHub last commit](https://img.shields.io/github/last-commit/jasleon/Inverted-Pendulum)
 
-This project simulates an inverted pendulum in C++
+A simple simulator to test control algorithms in C++
 
 <p align="center">
   <img src="img/carpole-free.gif" width=50% height=50%/>
@@ -9,6 +9,9 @@ This project simulates an inverted pendulum in C++
 <p align="center">
     Inverted pendulum with non-zero initial conditions
 </p>
+
+## Notes
+This simulator is being developed on Ubuntu using the Windows Subsystem for Linux (WSL).
 
 ## Dependencies
 - cmake
@@ -23,6 +26,10 @@ This project simulates an inverted pendulum in C++
 2. Make a build directory: `mkdir build && cd build`
 3. Compile: `cmake .. && make`
 4. Run it: `./game`
+
+## Guidelines
+- [Google's C++ style guide](https://google.github.io/styleguide/cppguide.html)
+- [Udacity Git Commit Message Style Guide](http://udacity.github.io/git-styleguide/)
 
 ## References
 ### Tutorials
