@@ -1,4 +1,5 @@
 # Inverted Pendulum
+![build](https://github.com/jasleon/Inverted-Pendulum/actions/workflows/main.yml/badge.svg)
 ![GitHub last commit](https://img.shields.io/github/last-commit/jasleon/Inverted-Pendulum)
 
 A simple simulator to test control algorithms in C++
