@@ -25,13 +25,12 @@ jobs:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v2
 
+      # Install SFML
+      - name: Install SFML
+      - run: sudo apt-get install libsfml-dev
+      
       # Make a build directory and compile
       - name: Build
         run: |
           mkdir build && cd build
           cmake .. && make
-      
-      # Run the executable
-      - name: Run
-        run: |
-          ./build/app
