@@ -18,6 +18,7 @@ This simulator is being developed on Ubuntu using the Windows Subsystem for Linu
 - cmake
 - make
 - gcc/g++
+- [eigen](https://eigen.tuxfamily.org/index.php?title=Main_Page) (included)
 - [sfml](https://www.sfml-dev.org/)
 - [googletest](https://github.com/google/googletest) (optional)
 - [sciplot](https://github.com/sciplot/sciplot) (optional)
@@ -35,6 +36,7 @@ This simulator is being developed on Ubuntu using the Windows Subsystem for Linu
 ## References
 ### Projects
 - [CartPole-v1](https://gym.openai.com/envs/CartPole-v1/)
+- [Riccati_Solver](https://github.com/TakaHoribe/Riccati_Solver)
 ### Tutorials
 - [Install WSL on Windows 10](https://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/)
 - [Install SFML in Linux](https://www.sfml-dev.org/tutorials/2.5/start-linux.php)
