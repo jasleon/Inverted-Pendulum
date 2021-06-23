@@ -73,8 +73,8 @@ void InvertedPendulum::Linearize() {
   A_(3, 3) = -gamma_ * M_t_ / mu;
 
   B_ = Eigen::MatrixXd::Zero(4, 1);
-  B_(2, 1) = J_t_ / mu;
-  B_(3, 1) = l_ * m_ / mu;
+  B_(2, 0) = J_t_ / mu;
+  B_(3, 0) = l_ * m_ / mu;
 
   C_ = Eigen::MatrixXd::Identity(4, 4);
   D_ = Eigen::MatrixXd::Zero(4, 1);
