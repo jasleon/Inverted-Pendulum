@@ -41,6 +41,11 @@ class InvertedPendulum {
    */
   Eigen::VectorXd GetState() const;
 
+  /**
+   * Linearizes the system around the equilibrium point (theta -> 0)
+   */
+  void Linearize();
+
   const double M_;      // mass of the base
   const double m_;      // mass of the pendulum
   const double J_;      // moment of inertia of the pendulum
@@ -50,6 +55,11 @@ class InvertedPendulum {
   const double g_;      // acceleration due to gravity
   const double M_t_;    // total mass
   const double J_t_;    // total inertia
+
+  Eigen::MatrixXd A_;  // dynamics matrix
+  Eigen::MatrixXd B_;  // control matrix
+  Eigen::MatrixXd C_;  // sensor matrix
+  Eigen::MatrixXd D_;  // direct term
 
  private:
   Eigen::VectorXd x_;      // state vector
