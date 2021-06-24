@@ -13,6 +13,7 @@ int main() {
   control.A_ = model.A_;
   control.B_ = model.B_;
   control.Q_ = Eigen::MatrixXd::Identity(4, 4);
+  control.Q_(0, 0) = 10;
   control.R_ = Eigen::MatrixXd::Identity(1, 1);
   control.Compute();
 
