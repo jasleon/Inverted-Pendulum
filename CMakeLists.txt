@@ -35,5 +35,6 @@ find_package(SFML COMPONENTS graphics window system REQUIRED)
 add_executable(cartpole game/main.cpp)
 target_link_libraries(cartpole source sfml-graphics sfml-window sfml-system)
 
-add_executable(solver main.cpp)
-target_link_libraries(solver source)
+# Add executable to run examples
+add_executable(example examples/lqr_design.cpp)
+target_link_libraries(example source)
