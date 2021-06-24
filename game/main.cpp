@@ -5,6 +5,7 @@
 #include "inverted_pendulum.h"
 #include "tools.h"
 #include "pid.h"
+#include "lqr.h"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(640, 480), "Inverted Pendulum");
@@ -24,6 +25,18 @@ int main() {
   InvertedPendulum *ptr = new InvertedPendulum(x_0);
   PID *c_ptr = new PID();
   c_ptr->Init(kp, ki, kd);
+
+  // Design LQR controller
+  LQR optimal;
+  ptr->Linearize();
+  optimal.A_ = ptr->A_;
+  optimal.B_ = ptr->B_;
+  optimal.Q_ = Eigen::MatrixXd::Identity(4, 4);
+  optimal.Q_(0, 0) = 10;
+  optimal.R_ = Eigen::MatrixXd::Identity(1, 1);
+  optimal.Compute();
+
+  bool pid = true;
 
   // Load font
   sf::Font font;
@@ -79,18 +92,24 @@ int main() {
     const std::string msg = std::to_string(time);
     text.setString("Time " + msg.substr(0, msg.find('.') + 2));
     if (time < 15) {
-      double angle = ptr->GetState()(1);
-      double error = 0.0F - angle;
-      std::cout << "angle: " << angle << std::endl;
-      c_ptr->UpdateError(time, error);
-      ptr->Update(time, c_ptr->TotalError());
+      double u = 0;
+      if (pid) {
+        double angle = ptr->GetState()(1);
+        double error = 0.0F - angle;
+        c_ptr->UpdateError(time, error);
+        u = c_ptr->TotalError();
+      } else {
+        u = optimal.Control(ptr->GetState())(0, 0);
+      }
+      ptr->Update(time, u);
     } else {
       delete ptr;
       delete c_ptr;
       ptr = new InvertedPendulum(x_0);
-      PID *c_ptr = new PID();
+      c_ptr = new PID();
       c_ptr->Init(kp, ki, kd);
       clock.restart();
+      pid = (pid) ? false : true;
     }
 
     Eigen::VectorXd x = ptr->GetState();
