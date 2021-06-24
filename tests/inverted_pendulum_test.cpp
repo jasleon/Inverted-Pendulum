@@ -32,19 +32,24 @@ TEST(InvertedPendulumTest, Linearize) {
   Eigen::MatrixXd exp_B = Eigen::MatrixXd::Zero(4, 1);
   exp_B << 0, 0, 0.6667, 0.3333;
 
-  size_t n = exp_A.rows();
-  size_t m = exp_A.cols();
-  for (size_t i = 0; i < n; ++i) {
-    for (size_t j = 0; j < m; ++j) {
-      EXPECT_NEAR(exp_A(i, j), model.A_(i, j), 1e-3);
-    }
-  }
+  std::vector<std::tuple<Eigen::MatrixXd, Eigen::MatrixXd>> pairs;
+  pairs.push_back(std::make_tuple(exp_A, model.A_));
+  pairs.push_back(std::make_tuple(exp_B, model.B_));
 
-  n = exp_B.rows();
-  m = exp_B.cols();
-  for (size_t i = 0; i < n; ++i) {
-    for (size_t j = 0; j < m; ++j) {
-      EXPECT_NEAR(exp_B(i, j), model.B_(i, j), 1e-3);
+  for (auto &p : pairs) {
+    auto expected = std::get<0>(p);
+    auto observed = std::get<1>(p);
+
+    EXPECT_EQ(expected.rows(), observed.rows());
+    EXPECT_EQ(expected.cols(), observed.cols());
+
+    size_t n = expected.rows();
+    size_t m = expected.cols();
+
+    for (size_t i = 0; i < n; ++i) {
+      for (size_t j = 0; j < m; ++j) {
+        EXPECT_NEAR(expected(i, j), observed(i, j), 1e-3);
+      }
     }
   }
 }
