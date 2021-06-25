@@ -5,6 +5,7 @@
 #include "inverted_pendulum.h"
 #include "tools.h"
 #include "pid.h"
+#include "lqr.h"
 
 int main() {
   sf::RenderWindow window(sf::VideoMode(640, 480), "Inverted Pendulum");
@@ -25,6 +26,18 @@ int main() {
   PID *c_ptr = new PID();
   c_ptr->Init(kp, ki, kd);
 
+  // Design LQR controller
+  LQR optimal;
+  ptr->Linearize();
+  optimal.A_ = ptr->A_;
+  optimal.B_ = ptr->B_;
+  optimal.Q_ = Eigen::MatrixXd::Identity(4, 4);
+  optimal.Q_(0, 0) = 10;
+  optimal.R_ = Eigen::MatrixXd::Identity(1, 1);
+  optimal.Compute();
+
+  bool pid = true;
+
   // Load font
   sf::Font font;
   if (!font.loadFromFile("Roboto-Regular.ttf")) {
@@ -38,6 +51,14 @@ int main() {
   const sf::Color grey = sf::Color(0x7E, 0x7E, 0x7E);
   text.setFillColor(grey);
   text.setPosition(480.0F, 360.0F);
+
+  // Create text to display controller type
+  sf::Text type;
+  type.setFont(font);
+  type.setCharacterSize(24);
+  const sf::Color turquoise = sf::Color(0x06, 0xC2, 0xAC);
+  type.setFillColor(turquoise);
+  type.setPosition(480.0F, 384.0F);
 
   // Create a track for the cart
   sf::RectangleShape track(sf::Vector2f(640.0F, 2.0F));
@@ -77,20 +98,28 @@ int main() {
     sf::Time elapsed = clock.getElapsedTime();
     const float time = elapsed.asSeconds();
     const std::string msg = std::to_string(time);
-    text.setString("Time " + msg.substr(0, msg.find('.') + 2));
+    text.setString("Time   " + msg.substr(0, msg.find('.') + 2));
+    const std::string action = pid ? "Action PID" : "Action LQR";
+    type.setString(action);
     if (time < 15) {
-      double angle = ptr->GetState()(1);
-      double error = 0.0F - angle;
-      std::cout << "angle: " << angle << std::endl;
-      c_ptr->UpdateError(time, error);
-      ptr->Update(time, c_ptr->TotalError());
+      double u = 0;
+      if (pid) {
+        double angle = ptr->GetState()(1);
+        double error = 0.0F - angle;
+        c_ptr->UpdateError(time, error);
+        u = c_ptr->TotalError();
+      } else {
+        u = optimal.Control(ptr->GetState())(0, 0);
+      }
+      ptr->Update(time, u);
     } else {
       delete ptr;
       delete c_ptr;
       ptr = new InvertedPendulum(x_0);
-      PID *c_ptr = new PID();
+      c_ptr = new PID();
       c_ptr->Init(kp, ki, kd);
       clock.restart();
+      pid = (pid) ? false : true;
     }
 
     Eigen::VectorXd x = ptr->GetState();
@@ -105,6 +134,7 @@ int main() {
     window.draw(cart);
     window.draw(pole);
     window.draw(text);
+    window.draw(type);
     window.display();
   }
   return 0;

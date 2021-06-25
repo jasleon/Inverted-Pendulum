@@ -34,3 +34,7 @@ configure_file(res/Roboto-Regular.ttf Roboto-Regular.ttf COPYONLY)
 find_package(SFML COMPONENTS graphics window system REQUIRED)
 add_executable(cartpole game/main.cpp)
 target_link_libraries(cartpole source sfml-graphics sfml-window sfml-system)
+
+# Add executable to run examples
+add_executable(example examples/lqr_design.cpp)
+target_link_libraries(example source)

@@ -58,3 +58,24 @@ void InvertedPendulum::Update(double time, double u) {
 }
 
 Eigen::VectorXd InvertedPendulum::GetState() const { return x_; }
+
+void InvertedPendulum::Linearize() {
+  const double mu = M_t_ * J_t_ - std::pow((m_ * l_), 2);
+
+  A_ = Eigen::MatrixXd::Zero(4, 4);
+  A_(0, 2) = 1;
+  A_(1, 3) = 1;
+  A_(2, 1) = std::pow((m_ * l_), 2) * g_ / mu;
+  A_(2, 2) = -c_ * J_t_ / mu;
+  A_(2, 3) = -gamma_ * l_ * m_ / mu;
+  A_(3, 1) = M_t_ * m_ * g_ * l_ / mu;
+  A_(3, 2) = -c_ * l_ * m_ / mu;
+  A_(3, 3) = -gamma_ * M_t_ / mu;
+
+  B_ = Eigen::MatrixXd::Zero(4, 1);
+  B_(2, 0) = J_t_ / mu;
+  B_(3, 0) = l_ * m_ / mu;
+
+  C_ = Eigen::MatrixXd::Identity(4, 4);
+  D_ = Eigen::MatrixXd::Zero(4, 1);
+}
