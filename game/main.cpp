@@ -52,6 +52,14 @@ int main() {
   text.setFillColor(grey);
   text.setPosition(480.0F, 360.0F);
 
+  // Create text to display controller type
+  sf::Text type;
+  type.setFont(font);
+  type.setCharacterSize(24);
+  const sf::Color turquoise = sf::Color(0x06, 0xC2, 0xAC);
+  type.setFillColor(turquoise);
+  type.setPosition(480.0F, 384.0F);
+
   // Create a track for the cart
   sf::RectangleShape track(sf::Vector2f(640.0F, 2.0F));
   track.setOrigin(320.0F, 1.0F);
@@ -90,7 +98,9 @@ int main() {
     sf::Time elapsed = clock.getElapsedTime();
     const float time = elapsed.asSeconds();
     const std::string msg = std::to_string(time);
-    text.setString("Time " + msg.substr(0, msg.find('.') + 2));
+    text.setString("Time   " + msg.substr(0, msg.find('.') + 2));
+    const std::string action = pid ? "Action PID" : "Action LQR";
+    type.setString(action);
     if (time < 15) {
       double u = 0;
       if (pid) {
@@ -124,6 +134,7 @@ int main() {
     window.draw(cart);
     window.draw(pole);
     window.draw(text);
+    window.draw(type);
     window.display();
   }
   return 0;
