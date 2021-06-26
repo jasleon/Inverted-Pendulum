@@ -31,6 +31,16 @@ jobs:
           sudo apt-get update
           sudo apt-get install libsfml-dev
       
+      # Install googletest
+      - name: Install googletest
+        run: |
+          git clone https://github.com/google/googletest.git -b release-1.10.0 && cd googletest
+          mkdir build
+          cd build
+          cmake ..
+          make
+          sudo make install
+      
       # Make a build directory and compile
       - name: Build
         run: |
