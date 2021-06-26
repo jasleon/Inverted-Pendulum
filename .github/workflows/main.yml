@@ -46,3 +46,7 @@ jobs:
         run: |
           mkdir build && cd build
           cmake .. && make
+
+      # Run unit tests
+      - name: Test
+        run: ./build/test
