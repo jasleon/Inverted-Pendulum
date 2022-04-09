@@ -11,6 +11,20 @@ A simple simulator to test control algorithms in C++
     Inverted pendulum in open-loop
 </p>
 
+<p align="center">
+  <img src="img/cartpole-pid.gif" width=50% height=50%/>
+</p>
+<p align="center">
+    Inverted pendulum in closed-loop with PID
+</p>
+
+<p align="center">
+  <img src="img/cartpole-lqr.gif" width=50% height=50%/>
+</p>
+<p align="center">
+    Inverted pendulum in closed-loop with LQR
+</p>
+
 ## Notes
 This simulator is being developed on Ubuntu using the Windows Subsystem for Linux (WSL)
 
